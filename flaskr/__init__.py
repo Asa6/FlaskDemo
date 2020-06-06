@@ -3,15 +3,15 @@ from flask import Flask
 from flask_migrate import Migrate
 
 
-from .models import db
+
+from .cmdb import db
+
 #: 需要将model导入，否则flask db xxxx 无法使用
-from .models import user, cmdb
+from .cmdb.models import cmdb
+from .user.models import user
+
 
 migrate = Migrate()
-
-# from flask_restful import Api
-# api_bp = Blueprint('api', __name__)
-# api = Api(api_bp)
 
 
 
@@ -40,13 +40,14 @@ def create_app(config=None):
 
 
 
-    # from flask_restful import Api
-    # from flask import Blueprint
-    #
-    # api_bp = Blueprint('api', __name__)
-    # api = Api(api_bp, prefix='/api/v1')
-    from .urls import api_bp
-    app.register_blueprint(api_bp, url_prefix='/api')
+    #: cmdb蓝图
+    from .cmdb.urls import cmdb_bp
+    app.register_blueprint(cmdb_bp, url_prefix='/api')
+
+    #: user蓝图
+    from .user.urls import user_bp
+    app.register_blueprint(user_bp, url_prefix='/api')
+
 
 
 

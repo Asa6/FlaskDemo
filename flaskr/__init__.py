@@ -4,12 +4,18 @@ from flask_migrate import Migrate
 
 
 from .models import db
-# 需要将model导入，否则flask db xxxx 无法使用
+#: 需要将model导入，否则flask db xxxx 无法使用
 from .models import user, cmdb
 
 migrate = Migrate()
 
+# from flask_restful import Api
+# api_bp = Blueprint('api', __name__)
+# api = Api(api_bp)
 
+
+
+#: 工厂函数
 def create_app(config=None):
     app = Flask(__name__, instance_relative_config=True)
 
@@ -33,12 +39,24 @@ def create_app(config=None):
     migrate.init_app(app, db)
 
 
-    # 注册蓝图
-    from .views import (
-        cmdb, user
-    )
-    app.register_blueprint(cmdb.bp)
-    app.register_blueprint(user.bp)
+
+    # from flask_restful import Api
+    # from flask import Blueprint
+    #
+    # api_bp = Blueprint('api', __name__)
+    # api = Api(api_bp, prefix='/api/v1')
+    from .urls import api_bp
+    app.register_blueprint(api_bp, url_prefix='/api')
+
+
+
+    #: 注册蓝图
+    # from .views import (
+    #     cmdb, user
+    # )
+    # app.register_blueprint(cmdb.bp)
+    # app.register_blueprint(user.bp)
+
 
 
     return app

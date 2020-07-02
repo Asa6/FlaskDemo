@@ -39,7 +39,6 @@ def create_app(config=None):
     migrate.init_app(app, db)
 
 
-
     #: cmdb蓝图
     from .cmdb.urls import cmdb_bp
     app.register_blueprint(cmdb_bp, url_prefix='/api')
@@ -47,8 +46,6 @@ def create_app(config=None):
     #: user蓝图
     from .user.urls import user_bp
     app.register_blueprint(user_bp, url_prefix='/api')
-
-
 
 
     #: 注册蓝图

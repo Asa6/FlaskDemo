@@ -1,5 +1,26 @@
 from flask_restful import Resource
+from flask import request
 
+
+class Login(Resource):
+    def __init__(self):
+        self.ret = {"code": None, "msg": None, "data": None}
+
+    def get(self):
+        pass
+
+    def post(self):
+        try:
+            json_data = request.get_json()
+
+            self.ret['code'] = '200'
+            self.ret['msg'] = '用户认证成功'
+            self.ret['data'] = json_data
+        except Exception as e:
+            self.ret["code"] = "500"
+            self.ret["msg"] = e
+
+        return self.ret
 
 class UserList(Resource):
     def __init__(self):
